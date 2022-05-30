@@ -51,15 +51,12 @@ function App() {
   }
   function verificInput() {
     if (procesar(value) === procesar(paises[num].translations.es)) {
-      console.log(`correcto`)
       setvalue('')
       NewPais()
-    } else {
-      console.log('inco')
-    }
+    } 
   }
   const remAcent = (str) => {
-    const acentos = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U' };
+    const acentos = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U',',':'','.':'' };
     return str.split('').map(letra => acentos[letra] || letra).join('').toString();
   }
   function procesar(str) {
@@ -87,7 +84,7 @@ function App() {
     setNombrePais(procesar(newstr))
   }
   function resolverNombre() {
-    setPuntaje(0)
+    Puntaje===0?setPuntaje(0):setPuntaje(Puntaje-1)
     let str = NombrePais
     let a = str.length
     let nombreOg = paises[num].translations.es
@@ -117,21 +114,17 @@ function App() {
 
   return (
 
-    <div className="font-monospace min-vh-100 d-flex justify-content-center align-items-center bg-custom">
+    <div className="font-monospace min-vh-100 d-flex justify-content-center align-items-start align-items-sm-center bg-custom">
       {paises[0] ?
         !NombrePais ?
-          <div className=" d-flex flex-column ">
-
-            <h1 className="m-5 mt-0 ">La mejor trivia sobre paises</h1>
-
+          <div className=" d-flex flex-column justify-content-center">
+            <h1 className="m-5 mt-0-sm mt-5">La mejor trivia sobre paises</h1>
             <div className="d-flex justify-content-center">
-
               <button className="mt-5  px-5 btn btn-warning" onClick={empezar}>Empezar</button>
-
             </div>
           </div>
           :
-          <div className="card border-light shadow-sm" style={{ width: "18rem" }}>
+          <div className="card mt-3 mt-0-sm border-light shadow-sm" style={{ width: "18rem" }}>
             <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light fw-bold">Puntaje:{Puntaje}</p>
               <img src={foco} onClick={resolverNombre} className="m-1 position-absolute top-0 end-0 bombilla" />
             <img src={paises[num].flags.png} height={"160"} className="card-img-top" alt="Bandera" />
