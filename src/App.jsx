@@ -1,16 +1,17 @@
 import axios from "axios"
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useState } from "react"
+import audio from './public/sound/correct.mp3'
+import foco from './public/img/bombilla.png'
 import { Spinner } from "react-bootstrap";
 import './style/app.css'
 
 function App() {
-
+  const correct=new Audio(audio)
   const [paises, setPaises] = useState([])
   const [num, setnum] = useState(0)
   const [value, setvalue] = useState('')
   const [NombrePais, setNombrePais] = useState('')
   const [Puntaje, setPuntaje] = useState(0)
-  const correct=new Audio('./src/sound/correct.mp3')
   async function ObtenerData() {
     try {
       const response = await axios('https://restcountries.com/v2/all')
@@ -133,7 +134,7 @@ function App() {
           :
           <div className="card border-light shadow-sm" style={{ width: "18rem" }}>
             <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light fw-bold">Puntaje:{Puntaje}</p>
-              <img src={'./src/img/bombilla.png'} onClick={resolverNombre} className="m-1 position-absolute top-0 end-0 bombilla" />
+              <img src={foco} onClick={resolverNombre} className="m-1 position-absolute top-0 end-0 bombilla" />
             <img src={paises[num].flags.png} height={"160"} className="card-img-top" alt="Bandera" />
             <div className="card-body">
               <h5 className="card-title letter-spacing text-center mb-3">{NombrePais}</h5>
