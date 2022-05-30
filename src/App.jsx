@@ -122,7 +122,7 @@ function App() {
         !NombrePais ?
           <div className=" d-flex flex-column ">
 
-            <h1 className="m-5 mt-0">La mejor trivia sobre paises</h1>
+            <h1 className="m-5 mt-0 ">La mejor trivia sobre paises</h1>
 
             <div className="d-flex justify-content-center">
 
