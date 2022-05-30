@@ -36,7 +36,7 @@ function App() {
     correct.play()
     let a = getRandomInt(0, 249)
     setnum(a)
-    setPuntaje(Puntaje + 1)
+    setPuntaje(Puntaje + 50)
     procesarNombre(paises[a].translations.es)
   }
   const update = (e) => {
@@ -84,7 +84,7 @@ function App() {
     setNombrePais(procesar(newstr))
   }
   function resolverNombre() {
-    Puntaje === 0 ? setPuntaje(0) : setPuntaje(Puntaje - 1)
+    Puntaje === 0 ? setPuntaje(0) : setPuntaje(Puntaje - 10)
     let str = NombrePais
     let a = str.length
     let nombreOg = paises[num].translations.es
