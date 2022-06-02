@@ -164,7 +164,7 @@ function App() {
               <h5 className="card-title letter-spacing text-center mb-3">{NombrePais}</h5>
               <p className="card-text mt-1 mb-0">Pais <strong>Nº{num + 1}.</strong></p>
               <p className="card-text mt-1 mb-0"> Su capital es:{paises[num].capital ? <span className="text-success">{paises[num].capital}</span> : <strong className="text-danger">Este pais no tiene capital</strong>}</p>
-              <p className="card-text mt-1 mb-0"> Su region es: <span className="text-success">{traslate(paises[num].subregion)}</span></p>
+              <p className="card-text mt-1 mb-0"> Su subregion es: <span className="text-success">{traslate(paises[num].subregion)}</span></p>
               <p className="card-text mt-1 mb-0"> Poblacion: <span className="text-success">{paises[num].population.toLocaleString('es')}</span> Personas</p>
               <textarea style={{ resize: "none" }} rows={2} className="form-control text-uppercase" type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={verificEnter} />
               <button className="btn btn-warning mt-2 w-100" onClick={verificInput}>Verificar</button>
