@@ -33,14 +33,12 @@ function App() {
     procesarNombre(paises[a].translations.es)
   }
   function NewPais() {
+    setInputValue('')
     correct.play()
     let a = getRandomInt(0, 249)
     setnum(a)
-    setPuntaje(Puntaje + 50)
+    setPuntaje(Puntaje + 30)
     procesarNombre(paises[a].translations.es)
-  }
-  const update = (e) => {
-    setvalue(e.target.value.toUpperCase())
   }
   function verificEnter(e) {
 
@@ -50,14 +48,47 @@ function App() {
     }
   }
   function verificInput() {
-    if (procesar(inputValue) === procesar(paises[num].translations.es)) {
-      setInputValue('')
+    let hecho = NombrePais.split(' ')
+    let input = procesar(inputValue)
+    let str = procesar(paises[num].translations.es)
+    let length = str.split(' ').length
+    if (procesar(NombrePais) !== str) {
+      if (input === str) {
+        setInputValue('')
+        NewPais()
+      } else {
+        for (let i = 0; i < length; i++) {
+
+          if (input === str.split(' ')[i] && hecho[i] !== str.split(' ')[i]) {
+            NombrePais.split(' ')[i].split('').forEach((e) => {
+              if (e.toString() === '_') {
+                setPuntaje(Puntaje + 5)
+              }
+            });
+            hecho[i] = input
+            setNombrePais(hecho.join(' '))
+            correct.play()
+            setInputValue('')
+            console.log()
+            if (hecho.join(' ') === str) {
+              NewPais()
+            }
+          }
+
+        }
+
+      }
+    } else {
       NewPais()
     }
   }
   const remAcent = (str) => {
-    const acentos = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U', ',': '', '.': '' };
+    const acentos = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U', ',': '', '.': '', '(': '', ')': '' };
     return str.split('').map(letra => acentos[letra] || letra).join('').toString();
+  }
+  const traslate = (str) => {
+    const subregions = { 'Middle Africa': 'África central', 'Northern Europe': 'Norte de Europa', 'Caribbean': 'caribe', 'Polynesia': 'Polinesia', 'Central America': 'Centroamérica', 'Central Asia': 'Asia Central', 'Western Asia': 'Asia occidental', 'Australia and New Zealand': 'Australia y Nueva Zelanda', 'Southern Africa': 'Africa del Sur', 'Western Africa': 'África Occidental', 'Eastern Asia': 'Asia Oriental', 'Southern Asia': 'Asia meridional', 'South America': 'Sudamerica','Eastern Africa':'África oriental','Northern Africa':'Africa del Norte','Southern Europe':'Europa del sur','Northern America':'america del norte','South-Eastern Asia':'Sureste de Asia','Melanesia':'Melanesia','Micronesia':'Micronesia','Eastern Europe':'Europa del Este','Central Europe':'Europa Central' }
+    return(subregions[str]?subregions[str]:str);
   }
   function procesar(str) {
     return remAcent(str.toUpperCase().trim())
@@ -84,7 +115,7 @@ function App() {
     setNombrePais(procesar(newstr))
   }
   function resolverNombre() {
-    Puntaje === 0 ? setPuntaje(0) : setPuntaje(Puntaje - 10)
+    Puntaje - 5 <= 0 ? setPuntaje(0) : setPuntaje(Puntaje - 5)
     let str = NombrePais
     let a = str.length
     let nombreOg = paises[num].translations.es
@@ -124,15 +155,17 @@ function App() {
             </div>
           </div>
           :
+
           <div className="card mt-3 mt-0-sm border-light shadow-sm" style={{ width: "18rem" }}>
             <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light fw-bold">Puntaje:{Puntaje}</p>
             <img src={foco} onClick={resolverNombre} className="m-1 position-absolute top-0 end-0 bombilla" />
             <img src={paises[num].flags.png} height={"160"} className="card-img-top" alt="Bandera" />
             <div className="card-body">
               <h5 className="card-title letter-spacing text-center mb-3">{NombrePais}</h5>
-              <p className="card-text mb-0">Pais <strong>Nº{num + 1}.</strong></p>
-              <p className="card-text mb-0"> Su capital es:</p>
-              <p className="card-text ">{paises[num].capital ? <span className="text-success">{paises[num].capital}</span> : <strong className="text-danger">Este pais no tiene capital</strong>}</p>
+              <p className="card-text mt-1 mb-0">Pais <strong>Nº{num + 1}.</strong></p>
+              <p className="card-text mt-1 mb-0"> Su capital es:{paises[num].capital ? <span className="text-success">{paises[num].capital}</span> : <strong className="text-danger">Este pais no tiene capital</strong>}</p>
+              <p className="card-text mt-1 mb-0"> Su region es: <span className="text-success">{traslate(paises[num].subregion)}</span></p>
+              <p className="card-text mt-1 mb-0"> Su Poblacion es de:<span className="text-success">{paises[num].population.toLocaleString('es')}</span> Personas</p>
               <textarea style={{ resize: "none" }} rows={2} className="form-control text-uppercase" type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={verificEnter} />
               <button className="btn btn-warning mt-2 w-100" onClick={verificInput}>Verificar</button>
             </div>
