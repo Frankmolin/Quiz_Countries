@@ -9,7 +9,7 @@ function App() {
   const correct = new Audio(audio)
   const [paises, setPaises] = useState([])
   const [num, setnum] = useState(0)
-  const [value, setvalue] = useState('')
+  const [inputValue, setInputValue] = useState('')
   const [NombrePais, setNombrePais] = useState('')
   const [Puntaje, setPuntaje] = useState(0)
   async function ObtenerData() {
@@ -50,8 +50,8 @@ function App() {
     }
   }
   function verificInput() {
-    if (procesar(value) === procesar(paises[num].translations.es)) {
-      setvalue('')
+    if (procesar(inputValue) === procesar(paises[num].translations.es)) {
+      setInputValue('')
       NewPais()
     }
   }
@@ -133,11 +133,8 @@ function App() {
               <p className="card-text mb-0">Pais <strong>Nº{num + 1}.</strong></p>
               <p className="card-text mb-0"> Su capital es:</p>
               <p className="card-text ">{paises[num].capital ? <span className="text-success">{paises[num].capital}</span> : <strong className="text-danger">Este pais no tiene capital</strong>}</p>
-              <textarea style={{ resize: "none" }} rows={2} className="form-control" type="text" value={value} onKeyDown={verificEnter} onChange={update} />
-              <div className="btn-group mt-3 d-flex justify-content-center">
-                <button className="btn btn-warning" onClick={verificInput}>Verificar</button>
-
-              </div>
+              <textarea style={{ resize: "none" }} rows={2} className="form-control text-uppercase" type="text" value={inputValue} onChange={(e) => setInputValue(e.target.value)} onKeyDown={verificEnter} />
+              <button className="btn btn-warning mt-2 w-100" onClick={verificInput}>Verificar</button>
             </div>
           </div>
         :
