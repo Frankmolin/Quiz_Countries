@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState } from "react"
+import { useEffect, useState,useRef } from "react"
 import audio from './public/sound/correct.mp3'
 import foco from './public/img/bombilla.png'
 import { Spinner } from "react-bootstrap";
@@ -13,6 +13,7 @@ function App() {
   const [inputValue, setInputValue] = useState('')
   const [NombrePais, setNombrePais] = useState('')
   const [Puntaje, setPuntaje] = useState(0)
+  const intento = useRef(1)
   async function ObtenerData() {
     try {
       const response = await axios('https://restcountries.com/v2/all')
@@ -38,7 +39,14 @@ function App() {
     correct.play()
     let a = getRandomInt(0, 249)
     setnum(a)
-    setPuntaje(Puntaje + 30)
+    
+    if (intento.current>0) {
+      intento.current=intento.current+1
+      setPuntaje(Puntaje + (30+(10*intento.current))) 
+    }else{
+      intento.current=1
+      setPuntaje(Puntaje + 30)
+    }
     procesarNombre(paises[a].translations.es)
   }
   function verificEnter(e) {
@@ -49,6 +57,7 @@ function App() {
     }
   }
   function verificInput() {
+    console.log(intento.current)
     let hecho = NombrePais.split(' ')
     let input = procesar(inputValue)
     let str = procesar(paises[num].translations.es)
@@ -58,7 +67,8 @@ function App() {
         setInputValue('')
         NewPais()
       } else {
-        setPuntaje(Puntaje-5)
+        Puntaje - 5 <= 0 ? setPuntaje(0) : setPuntaje(Puntaje - 5)
+        intento.current=0
         for (let i = 0; i < length; i++) {
           if (input === str.split(' ')[i] && hecho[i] !== str.split(' ')[i]) {
             let f=0
@@ -114,6 +124,7 @@ function App() {
     setNombrePais(procesar(newstr))
   }
   function resolverNombre() {
+    intento.current=0
     Puntaje - 10 <= 0 ? setPuntaje(0) : setPuntaje(Puntaje - 10)
     let str = NombrePais
     let a = str.length
