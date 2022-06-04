@@ -39,7 +39,6 @@ function App() {
     correct.play()
     let a = getRandomInt(0, 249)
     setnum(a)
-    
     if (intento.current>0) {
       intento.current=intento.current+1
       setPuntaje(Puntaje + (30+(10*intento.current))) 
@@ -57,7 +56,7 @@ function App() {
     }
   }
   function verificInput() {
-    console.log(intento.current)
+    
     let hecho = NombrePais.split(' ')
     let input = procesar(inputValue)
     let str = procesar(paises[num].translations.es)
@@ -155,7 +154,7 @@ function App() {
 
   return (
 
-    <div className="font-monospace min-vh-100 d-flex justify-content-center align-items-start align-items-sm-center bg-custom">
+    <div className="font-monospace min-vh-100 d-flex justify-content-center align-items-start align-items-sm-center bg-piramide">
       {paises[0] ?
         !NombrePais ?
           <div className=" d-flex flex-column justify-content-center">
@@ -167,7 +166,7 @@ function App() {
           :
 
           <div className="card mt-3 mt-0-sm border-light shadow-sm" style={{ width: "18rem" }}>
-            <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light fw-bold">Puntaje:{Puntaje}</p>
+            <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light">Puntaje:<span className={intento.current>1?`text-success`:''}>{Puntaje}</span></p>
             <img src={foco} onClick={resolverNombre} className="m-1 position-absolute top-0 end-0 bombilla" />
             <img src={paises[num].flags.png} height={"160"} className="card-img-top" alt="Bandera" />
             <div className="card-body">

@@ -29,7 +29,7 @@ function Modals({ paises, num }) {
                     <Modal.Title>Datos</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
-                   <div className="container">
+                   <div className="container h-100 d-flex align-items-center justify-content-center">
                        
                         <table className="table table-borderless  table-bordered border-dark">
                             <thead>
@@ -38,6 +38,7 @@ function Modals({ paises, num }) {
                                     <th scope="col">Capital</th>
                                     <th scope="col">Subregion</th>
                                     <th scope="col">Poblacion</th>
+                                    <th scope="col">Independencia</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -46,6 +47,7 @@ function Modals({ paises, num }) {
                                     <td >{paises[num].capital ? paises[num].capital : <strong className="text-danger">Este pais no tiene capital</strong>}</td>
                                     <td>{traslate(paises[num].subregion)}</td>
                                     <td>{paises[num].population.toLocaleString('es')}</td>
+                                    <td>{paises[num].independent?'Independiente':'Dependiente'}</td>
                                 </tr>
                             </tbody>
                         </table>
