@@ -26,7 +26,7 @@ function Modals({ paises, num }) {
 
             <Modal show={show} fullscreen={fullscreen} onHide={() => setShow(false)}>
                 <Modal.Header closeButton>
-                    <Modal.Title>Datos</Modal.Title>
+                    <Modal.Title>Datos del pais</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                    <div className="container h-100 d-flex align-items-center justify-content-center">

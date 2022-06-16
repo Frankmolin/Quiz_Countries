@@ -1,5 +1,5 @@
 import axios from "axios"
-import { useEffect, useState,useRef } from "react"
+import { useEffect, useState, useRef } from "react"
 import audio from './public/sound/correct.mp3'
 import foco from './public/img/bombilla.png'
 import { Spinner } from "react-bootstrap";
@@ -39,11 +39,11 @@ function App() {
     correct.play()
     let a = getRandomInt(0, 249)
     setnum(a)
-    if (intento.current>0) {
-      intento.current=intento.current+1
-      setPuntaje(Puntaje + (30+(10*intento.current))) 
-    }else{
-      intento.current=1
+    if (intento.current > 0) {
+      intento.current = intento.current + 1
+      setPuntaje(Puntaje + (30 + (10 * intento.current)))
+    } else {
+      intento.current = 1
       setPuntaje(Puntaje + 30)
     }
     procesarNombre(paises[a].translations.es)
@@ -56,46 +56,48 @@ function App() {
     }
   }
   function verificInput() {
-    
+
     let hecho = NombrePais.split(' ')
     let input = procesar(inputValue)
+    let inputLength = input.split(' ').length
+    console.log(inputLength)
     let str = procesar(paises[num].translations.es)
     let length = str.split(' ').length
+    let f = 0
     if (procesar(NombrePais) !== str) {
       if (input === str) {
         setInputValue('')
         NewPais()
       } else {
         Puntaje - 5 <= 0 ? setPuntaje(0) : setPuntaje(Puntaje - 5)
-        intento.current=0
-        for (let i = 0; i < length; i++) {
-          if (input === str.split(' ')[i] && hecho[i] !== str.split(' ')[i]) {
-            let f=0
-            NombrePais.split(' ')[i].split('').forEach((e) => {
-              if (e.toString() === '_') {
-                f++
-              }
-            });
-            setPuntaje(Puntaje + (f * 5))
-            hecho[i] = input
-            setNombrePais(hecho.join(' '))
-            correct.play()
-            setInputValue('')
-            
-            
-          }
-          if (hecho.join(' ') === str) {
-            NewPais()
+        intento.current = 0
+        for (let index = 0; index < inputLength; index++) {
+          for (let i = 0; i < length; i++) {
+            if (input.split(' ')[index] === str.split(' ')[i] && hecho[i] !== str.split(' ')[i]) {
+              
+              NombrePais.split(' ')[i].split('').forEach((e) => {
+                if (e.toString() === '_') {
+                  f++
+                }
+              });
+              setPuntaje(Puntaje + (f * 5))
+              hecho[i] = input.split(' ')[index]
+              setNombrePais(hecho.join(' '))
+              correct.play()
+              setInputValue('')
+            }
+            if (hecho.join(' ') === str) {
+              NewPais()
+            }
           }
         }
-
       }
     } else {
       NewPais()
     }
   }
   const remAcent = (str) => {
-    const acentos = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U', ',': '', '.': '', '(': '', ')': '','-':' ' };
+    const acentos = { 'á': 'a', 'é': 'e', 'í': 'i', 'ó': 'o', 'ú': 'u', 'Á': 'A', 'É': 'E', 'Í': 'I', 'Ó': 'O', 'Ú': 'U', ',': '', '.': '', '(': '', ')': '', '-': ' ' };
     return str.split('').map(letra => acentos[letra] || letra).join('').toString();
   }
   function procesar(str) {
@@ -123,7 +125,7 @@ function App() {
     setNombrePais(procesar(newstr))
   }
   function resolverNombre() {
-    intento.current=0
+    intento.current = 0
     Puntaje - 10 <= 0 ? setPuntaje(0) : setPuntaje(Puntaje - 10)
     let str = NombrePais
     let a = str.length
@@ -166,7 +168,7 @@ function App() {
           :
 
           <div className="card mt-3 mt-0-sm border-light shadow-sm" style={{ width: "18rem" }}>
-            <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light">Puntaje:<span className={intento.current>1?`text-success`:''}>{Puntaje}</span></p>
+            <p className="p-1 pe-2 puntaje position-absolute top-0 start-0 bg-light">Puntaje:<span className={intento.current > 1 ? `text-success` : ''}>{Puntaje}</span></p>
             <img src={foco} onClick={resolverNombre} className="m-1 position-absolute top-0 end-0 bombilla" />
             <img src={paises[num].flags.png} height={"160"} className="card-img-top" alt="Bandera" />
             <div className="card-body">
