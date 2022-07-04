@@ -14,6 +14,7 @@ function App() {
   const [NombrePais, setNombrePais] = useState('')
   const [Puntaje, setPuntaje] = useState(0)
   const intento = useRef(1)
+  const reIntento = useRef(1)
   async function ObtenerData() {
     try {
       const response = await axios('https://restcountries.com/v2/all')
@@ -53,14 +54,14 @@ function App() {
     if (e.code === 'Enter') {
       e.preventDefault()
       verificInput()
+    }else{
+      reIntento.current=1
     }
   }
   function verificInput() {
-
     let hecho = NombrePais.split(' ')
     let input = procesar(inputValue)
     let inputLength = input.split(' ').length
-    console.log(inputLength)
     let str = procesar(paises[num].translations.es)
     let length = str.split(' ').length
     let f = 0
@@ -69,12 +70,23 @@ function App() {
         setInputValue('')
         NewPais()
       } else {
-        Puntaje - 5 <= 0 ? setPuntaje(0) : setPuntaje(Puntaje - 5)
+        console.log(reIntento.current)
+        
+        
+        if (Puntaje - 5 <= 0) {
+          setPuntaje(0)
+        } else {
+          if(reIntento.current !== 0) {
+            setPuntaje(Puntaje - 5)
+            reIntento.current=0
+          }
+        }
+        
         intento.current = 0
         for (let index = 0; index < inputLength; index++) {
           for (let i = 0; i < length; i++) {
             if (input.split(' ')[index] === str.split(' ')[i] && hecho[i] !== str.split(' ')[i]) {
-              
+
               NombrePais.split(' ')[i].split('').forEach((e) => {
                 if (e.toString() === '_') {
                   f++
