@@ -70,9 +70,6 @@ function App() {
         setInputValue('')
         NewPais()
       } else {
-        console.log(reIntento.current)
-        
-        
         if (Puntaje - 5 <= 0) {
           setPuntaje(0)
         } else {
